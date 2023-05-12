@@ -1,0 +1,20 @@
+{
+  "name": "wallets",
+  "version": "1.0.0",
+  "description": "ripple-rpc",
+  "main": "ecosystem.config.js",
+  "dependencies": {
+    "http": "0.0.1-security",
+    "nodemon": "^1.19.1",
+    "ripple-lib": "^1.10.0",
+    "wallet-address-validator": "^0.2.4",
+    "ws": "^8.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
