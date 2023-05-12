@@ -1,0 +1,32 @@
+#!/usr/bin/env node
+
+const program = require('commander');
+const assert = require('assert');
+const path = require('path');
+const Config = require('simple-yaml-config');
+const pkg = require('../package.json');
+const validator = require('../lib/validator');
+const log = require('../lib/log');
+
+program
+  .version(pkg.version)
+  .option('-h, --rpc [rpc]', 'Ethereum blockchain rpc url (schema://host:port).', 'http://localhost:8545')
+  .option('-c, --chdir [chdir]', 'Config directory', process.cwd())
+  .option('-f, --fileName [fileName]', 'Config file name', 'ethwatcher.yaml')
+  .parse(process.argv);
+
+if (validator.isRPC(program.rpc) !== true) {
+  log.error('Please enter valid rpc.');
+  process.exit();
+}
+
+const config = new Config({
+  rpc: program.rpc,
+})
+const fileName = path.join(program.chdir, program.fileName);
+
+config.save(fileName).then(() => {
+  log.info(`Config was saved: ${fileName}`);
+}).catch((err) => {
+  log.error(`Cannot save config file: ${fileName}, error: ${err.message}`);
+})
